@@ -1,0 +1,866 @@
+
+EX_1
+
+import csv
+a=[]
+with open('/content/ex-1_ml.csv','r')as csvfile:
+  for row in csv.reader(csvfile):
+    a.append(row)
+print(a)
+
+OUTPUT:
+[['sunny', 'warm', 'normal', 'strong', 'same', 'yes'], ['sunny', 'warm', 'high', 'strong', 'same', 'yes'], ['rainy', 'cold', 'high', 'strong', 'change', 'no'], ['sunny', 'warm', 'high', 'strong', 'change', 'yes']]
+
+----------
+print("\n the total number of training instances are : ",len(a))
+num_attribute = len(a[0])-1
+num_attribute
+print("\n The initial hyp is : ")
+hypothesis = ['0']*num_attribute
+print(hypothesis)
+
+OUTPUT:
+
+
+ the total number of training instances are :  4
+
+ The initial hyp is : 
+['0', '0', '0', '0', '0']
+-----
+for i in range(0,len(a)):
+  if a[i][num_attribute]=='yes':
+    for j in range(0,num_attribute):
+      if hypothesis[j] == '0' or hypothesis[j]==a[i][j]:
+        hypothesis[j]=a[i][j]
+      else:
+        hypothesis[j]='?'
+    print("\n The hypothesis for the training instances{} is : \n",format(i+1),hypothesis)
+print("\n The maximally specific hypothesis for the training instances is")
+print(hypothesis)
+
+OUTPUT:
+
+ The hypothesis for the training instances{} is : 
+ 1 ['sunny', 'warm', 'normal', 'strong', 'same']
+
+ The hypothesis for the training instances{} is : 
+ 2 ['sunny', 'warm', '?', 'strong', 'same']
+
+ The hypothesis for the training instances{} is : 
+ 4 ['sunny', 'warm', '?', 'strong', '?']
+
+ The maximally specific hypothesis for the training instances is
+['sunny', 'warm', '?', 'strong', '?']
+------------------------------------------------------------------------------------
+
+Ex_2
+
+iris = datasets.load_iris()
+x=iris.data
+y= iris.target
+print('sepal_length','sepal_width','petal_length','petal_width')
+print(x)
+print('class : 0_Iris_Setosa,1_Iris_versicolos,2_Iris_virginica')
+print(y)
+
+OUTPUT:
+sepal_length sepal_width petal_length petal_width
+[[5.1 3.5 1.4 0.2]
+ [4.9 3.  1.4 0.2]
+ [4.7 3.2 1.3 0.2]
+ [4.6 3.1 1.5 0.2]
+ [5.  3.6 1.4 0.2]
+ [5.4 3.9 1.7 0.4]
+ [4.6 3.4 1.4 0.3]
+ [5.  3.4 1.5 0.2]
+ [4.4 2.9 1.4 0.2]
+ [4.9 3.1 1.5 0.1]
+ [5.4 3.7 1.5 0.2]
+ [4.8 3.4 1.6 0.2]
+ [4.8 3.  1.4 0.1]
+ [4.3 3.  1.1 0.1]
+ [5.8 4.  1.2 0.2]
+ [5.7 4.4 1.5 0.4]
+ [5.4 3.9 1.3 0.4]
+ [5.1 3.5 1.4 0.3]
+ [5.7 3.8 1.7 0.3]
+ [5.1 3.8 1.5 0.3]
+ [5.4 3.4 1.7 0.2]
+ [5.1 3.7 1.5 0.4]
+ [4.6 3.6 1.  0.2]
+ [5.1 3.3 1.7 0.5]
+ [4.8 3.4 1.9 0.2]
+ [5.  3.  1.6 0.2]
+ [5.  3.4 1.6 0.4]
+ [5.2 3.5 1.5 0.2]
+ [5.2 3.4 1.4 0.2]
+ [4.7 3.2 1.6 0.2]
+ [4.8 3.1 1.6 0.2]
+ [5.4 3.4 1.5 0.4]
+ [5.2 4.1 1.5 0.1]
+ [5.5 4.2 1.4 0.2]
+ [4.9 3.1 1.5 0.2]
+ [5.  3.2 1.2 0.2]
+ [5.5 3.5 1.3 0.2]
+ [4.9 3.6 1.4 0.1]
+ [4.4 3.  1.3 0.2]
+ [5.1 3.4 1.5 0.2]
+ [5.  3.5 1.3 0.3]
+ [4.5 2.3 1.3 0.3]
+ [4.4 3.2 1.3 0.2]
+ [5.  3.5 1.6 0.6]
+ [5.1 3.8 1.9 0.4]
+ [4.8 3.  1.4 0.3]
+ [5.1 3.8 1.6 0.2]
+ [4.6 3.2 1.4 0.2]
+ [5.3 3.7 1.5 0.2]
+ [5.  3.3 1.4 0.2]
+ [7.  3.2 4.7 1.4]
+ [6.4 3.2 4.5 1.5]
+ [6.9 3.1 4.9 1.5]
+ [5.5 2.3 4.  1.3]
+ [6.5 2.8 4.6 1.5]
+ [5.7 2.8 4.5 1.3]
+ [6.3 3.3 4.7 1.6]
+ [4.9 2.4 3.3 1. ]
+ [6.6 2.9 4.6 1.3]
+ [5.2 2.7 3.9 1.4]
+ [5.  2.  3.5 1. ]
+ [5.9 3.  4.2 1.5]
+ [6.  2.2 4.  1. ]
+ [6.1 2.9 4.7 1.4]
+ [5.6 2.9 3.6 1.3]
+ [6.7 3.1 4.4 1.4]
+ [5.6 3.  4.5 1.5]
+ [5.8 2.7 4.1 1. ]
+ [6.2 2.2 4.5 1.5]
+ [5.6 2.5 3.9 1.1]
+ [5.9 3.2 4.8 1.8]
+ [6.1 2.8 4.  1.3]
+ [6.3 2.5 4.9 1.5]
+ [6.1 2.8 4.7 1.2]
+ [6.4 2.9 4.3 1.3]
+ [6.6 3.  4.4 1.4]
+ [6.8 2.8 4.8 1.4]
+ [6.7 3.  5.  1.7]
+ [6.  2.9 4.5 1.5]
+ [5.7 2.6 3.5 1. ]
+ [5.5 2.4 3.8 1.1]
+ [5.5 2.4 3.7 1. ]
+ [5.8 2.7 3.9 1.2]
+ [6.  2.7 5.1 1.6]
+ [5.4 3.  4.5 1.5]
+ [6.  3.4 4.5 1.6]
+ [6.7 3.1 4.7 1.5]
+ [6.3 2.3 4.4 1.3]
+ [5.6 3.  4.1 1.3]
+ [5.5 2.5 4.  1.3]
+ [5.5 2.6 4.4 1.2]
+ [6.1 3.  4.6 1.4]
+ [5.8 2.6 4.  1.2]
+ [5.  2.3 3.3 1. ]
+ [5.6 2.7 4.2 1.3]
+ [5.7 3.  4.2 1.2]
+ [5.7 2.9 4.2 1.3]
+ [6.2 2.9 4.3 1.3]
+ [5.1 2.5 3.  1.1]
+ [5.7 2.8 4.1 1.3]
+ [6.3 3.3 6.  2.5]
+ [5.8 2.7 5.1 1.9]
+ [7.1 3.  5.9 2.1]
+ [6.3 2.9 5.6 1.8]
+ [6.5 3.  5.8 2.2]
+ [7.6 3.  6.6 2.1]
+ [4.9 2.5 4.5 1.7]
+ [7.3 2.9 6.3 1.8]
+ [6.7 2.5 5.8 1.8]
+ [7.2 3.6 6.1 2.5]
+ [6.5 3.2 5.1 2. ]
+ [6.4 2.7 5.3 1.9]
+ [6.8 3.  5.5 2.1]
+ [5.7 2.5 5.  2. ]
+ [5.8 2.8 5.1 2.4]
+ [6.4 3.2 5.3 2.3]
+ [6.5 3.  5.5 1.8]
+ [7.7 3.8 6.7 2.2]
+ [7.7 2.6 6.9 2.3]
+ [6.  2.2 5.  1.5]
+ [6.9 3.2 5.7 2.3]
+ [5.6 2.8 4.9 2. ]
+ [7.7 2.8 6.7 2. ]
+ [6.3 2.7 4.9 1.8]
+ [6.7 3.3 5.7 2.1]
+ [7.2 3.2 6.  1.8]
+ [6.2 2.8 4.8 1.8]
+ [6.1 3.  4.9 1.8]
+ [6.4 2.8 5.6 2.1]
+ [7.2 3.  5.8 1.6]
+ [7.4 2.8 6.1 1.9]
+ [7.9 3.8 6.4 2. ]
+ [6.4 2.8 5.6 2.2]
+ [6.3 2.8 5.1 1.5]
+ [6.1 2.6 5.6 1.4]
+ [7.7 3.  6.1 2.3]
+ [6.3 3.4 5.6 2.4]
+ [6.4 3.1 5.5 1.8]
+ [6.  3.  4.8 1.8]
+ [6.9 3.1 5.4 2.1]
+ [6.7 3.1 5.6 2.4]
+ [6.9 3.1 5.1 2.3]
+ [5.8 2.7 5.1 1.9]
+ [6.8 3.2 5.9 2.3]
+ [6.7 3.3 5.7 2.5]
+ [6.7 3.  5.2 2.3]
+ [6.3 2.5 5.  1.9]
+ [6.5 3.  5.2 2. ]
+ [6.2 3.4 5.4 2.3]
+ [5.9 3.  5.1 1.8]]
+class : 0_Iris_Setosa,1_Iris_versicolos,2_Iris_virginica
+[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+ 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+ 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2
+ 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+ 2 2]
+--------
+x_train,x_test,y_train,y_test= train_test_split(x,y,test_size=0.3)
+classifier = KNeighborsClassifier(n_neighbors=5)
+classifier.fit(x_train,y_train)
+y_pred=classifier.predict(x_test)
+print(y_pred)
+
+OUTPUT:
+[0 1 1 2 0 0 1 2 1 1 2 2 1 2 2 1 0 0 2 2 0 1 2 1 1 1 0 0 2 2 0 2 1 2 0 0 1
+ 0 1 2 1 1 0 0 0]
+-------
+print('Confusion matrix')
+print(confusion_matrix(y_test,y_pred))
+print('Accuracy Matrics')
+print(classification_report(y_test,y_pred))
+
+OUTPUT:
+
+print('Confusion matrix')
+print(confusion_matrix(y_test,y_pred))
+print('Accuracy Matrics')
+print(classification_report(y_test,y_pred))
+Confusion matrix
+[[15  0  0]
+ [ 0 15  2]
+ [ 0  1 12]]
+Accuracy Matrics
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00        15
+           1       0.94      0.88      0.91        17
+           2       0.86      0.92      0.89        13
+
+    accuracy                           0.93        45
+   macro avg       0.93      0.94      0.93        45
+weighted avg       0.94      0.93      0.93        45
+-----------------------
+EX_3
+
+import pandas as pd
+data = ['red','orange','green','blue','green','red','blue']
+encoded_data = pd.get_dummies(data)
+print(encoded_data)
+
+OUTPUT:
+   blue  green  orange    red
+0  False  False   False   True
+1  False  False    True  False
+2  False   True   False  False
+3   True  False   False  False
+4  False   True   False  False
+5  False  False   False   True
+6   True  False   False  False
+------
+from sklearn.preprocessing import OneHotEncoder
+import pandas as pd
+data = ['red','green','blue','green','red']
+df = pd.DataFrame(data)
+encoder = OneHotEncoder()
+encoded_data = encoder.fit_transform(df).toarray()
+print(encoded_data)
+
+OUTPUT:
+
+[[0. 0. 1.]
+ [0. 1. 0.]
+ [1. 0. 0.]
+ [0. 1. 0.]
+ [0. 0. 1.]]
+
+
+EX_4
+
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+import math
+import copy
+
+dataset = pd.read_csv('/content/tennis_dataset.csv')
+X = dataset.iloc[:, 1:].values
+# print(X)
+attribute = ['outlook', 'temp', 'humidity', 'wind']
+
+
+class Node(object):
+    def _init_(self):
+        self.value = None
+        self.decision = None
+        self.childs = None
+
+
+def findEntropy(data, rows):
+    yes = 0
+    no = 0
+    ans = -1
+    idx = len(data[0]) - 1
+    entropy = 0
+    for i in rows:
+        if data[i][idx] == 'Yes':
+            yes = yes + 1
+        else:
+            no = no + 1
+
+    x = yes/(yes+no)
+    y = no/(yes+no)
+    if x != 0 and y != 0:
+        entropy = -1 * (x*math.log2(x) + y*math.log2(y))
+    if x == 1:
+        ans = 1
+    if y == 1:
+        ans = 0
+    return entropy, ans
+---------
+def findMaxGain(data, rows, columns):
+    maxGain = 0
+    retidx = -1
+    entropy, ans = findEntropy(data, rows)
+    if entropy == 0:
+        """if ans == 1:
+            print("Yes")
+        else:
+            print("No")"""
+        return maxGain, retidx, ans
+
+    for j in columns:
+        mydict = {}
+        idx = j
+        for i in rows:
+            key = data[i][idx]
+            if key not in mydict:
+                mydict[key] = 1
+            else:
+                mydict[key] = mydict[key] + 1
+        gain = entropy
+
+        # print(mydict)
+        for key in mydict:
+            yes = 0
+            no = 0
+            for k in rows:
+                if data[k][j] == key:
+                    if data[k][-1] == 'Yes':
+                        yes = yes + 1
+                    else:
+                        no = no + 1
+            # print(yes, no)
+            x = yes/(yes+no)
+            y = no/(yes+no)
+            # print(x, y)
+            if x != 0 and y != 0:
+                gain += (mydict[key] * (x*math.log2(x) + y*math.log2(y)))/14
+        # print(gain)
+        if gain > maxGain:
+            # print("hello")
+            maxGain = gain
+            retidx = j
+
+    return maxGain, retidx, ans
+-------
+def buildTree(data, rows, columns):
+
+    maxGain, idx, ans = findMaxGain(X, rows, columns)
+    root = Node()
+    root.childs = []
+    # print(maxGain
+    #
+    # )
+    if maxGain == 0:
+        if ans == 1:
+            root.value = 'Yes'
+        else:
+            root.value = 'No'
+        return root
+
+    root.value = attribute[idx]
+    mydict = {}
+    for i in rows:
+        key = data[i][idx]
+        if key not in mydict:
+            mydict[key] = 1
+        else:
+            mydict[key] += 1
+
+    newcolumns = copy.deepcopy(columns)
+    newcolumns.remove(idx)
+    for key in mydict:
+        newrows = []
+        for i in rows:
+            if data[i][idx] == key:
+                newrows.append(i)
+        # print(newrows)
+        temp = buildTree(data, newrows, newcolumns)
+        temp.decision = key
+        root.childs.append(temp)
+    return root
+
+
+def traverse(root):
+    print(root.decision)
+    print(root.value)
+
+    n = len(root.childs)
+    if n > 0:
+        for i in range(0, n):
+            traverse(root.childs[i])
+
+
+def calculate():
+    rows = [i for i in range(0, 14)]
+    columns = [i for i in range(0, 4)]
+    root = buildTree(X, rows, columns)
+    root.decision = 'Start'
+    traverse(root)
+
+
+calculate()
+OUTPUT:
+Start
+outlook
+Sunny
+humidity
+High
+No
+Normal
+Yes
+Overcast
+Yes
+Rain
+wind
+Weak
+Yes
+Strong
+No
+----------
+import numpy as np
+import pandas as pd
+from sklearn import metrics
+from sklearn import tree
+
+# Load the data
+df = pd.read_csv('/content/tennis_dataset.csv')
+
+# Split the data into features and target
+X = df.drop('PlayTennis', axis=1)
+y = df['PlayTennis']
+
+# Perform one-hot encoding for categorical variables
+X_encoded = pd.get_dummies(X)
+
+# Create the ID3 classifier
+clf = tree.DecisionTreeClassifier()
+
+# Train the classifier
+clf.fit(X_encoded, y)
+
+# Make predictions
+y_pred = clf.predict(X_encoded)
+
+# Calculate the accuracy
+accuracy = metrics.accuracy_score(y, y_pred)
+
+# Print the accuracy
+print('The accuracy is:', accuracy)
+
+plt.figure(figsize=(15, 10))
+tree.plot_tree(clf, feature_names=list(X_encoded.columns), class_names=['No', 'Yes'], filled=True, rounded=True)
+plt.show()
+
+OUTPUT:
+
+The accuracy is: 1.0
+------------------------------------------------------------
+EX_5_1
+
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+%matplotlib inline
+df=pd.read_csv('/content/height_Weigth_dataset.csv')
+df.head()
+plt.scatter(df['Height'] ,  df['Weight'])
+plt.xlabel("Height")
+plt.ylabel("Weight")
+df.corr()
+df=pd.read_csv('/content/height_Weigth_dataset.csv')
+df.head()
+
+OUTPUT:
+	Unnamed: 0	Unnamed: 1	Height	Weight
+0	NaN	NaN	73.847017	241.893563
+1	NaN	NaN	68.781904	162.310473
+2	NaN	NaN	74.110105	212.740856
+3	NaN	NaN	71.730978	220.042470
+4	NaN	NaN	69.881796	206.349801
+------------
+
+plt.scatter(df['Height'] ,  df['Weight'])
+plt.xlabel("Height")
+plt.ylabel("Weight")
+df.corr()
+import seaborn as sns
+sns.pairplot(df)
+x=df[['Height']]
+y=df['Weight']
+x
+y
+
+OUTPUT:
+0     241.893563
+1     162.310473
+2     212.740856
+3     220.042470
+4     206.349801
+5     152.212156
+6     183.927889
+7     167.971111
+8     175.929440
+9     156.399676
+10    186.604926
+11    213.741170
+12    167.127461
+13    189.446181
+14    186.434168
+15    172.186930
+16    196.028506
+17    172.883470
+18    185.983958
+Name: Weight, dtype: float64
+(pic1)
+(pic2)
+------------
+x_series=df['Height']
+np.array(x_series).shape
+y_series=df['Weight']
+np.array(y_series).shape
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.25,random_state=42)
+from sklearn.preprocessing import StandardScaler
+scaler=StandardScaler()
+x_train=scaler.fit_transform(x_train)
+x_test=scaler.fit_transform(x_test)
+x_test
+
+OUTPUT:
+
+array([[ 1.56465824],
+       [-0.92825296],
+       [ 0.73058344],
+       [-0.35024536],
+       [-1.01674336]])
+----------
+
+from sklearn.linear_model import LinearRegression
+reg=LinearRegression(n_jobs=-1)
+reg.fit(x_train,y_train)
+print("coefficient or slope : ",reg.coef_)
+print("Intercept : ",reg.intercept_)
+plt.scatter(x_train,y_train)
+plt.plot(x_train,reg.predict(x_train))
+y_pred=reg.predict(x_test)
+from sklearn.metrics import mean_absolute_error,mean_squared_error
+mse=mean_squared_error(y_test,y_pred)
+mae=mean_absolute_error(y_test,y_pred)
+rmse=np.sqrt(mse)
+print(mse)
+print(mae)
+print(rmse)
+
+OUTPUT:
+coefficient or slope :  [14.79731022]
+Intercept :  186.00910016428566
+425.53015780081097
+18.63915445282267
+20.628382336014887
+(pic)
+
+----------
+from sklearn.metrics import r2_score
+score=r2_score(y_test,y_pred)
+print(score)
+1-(1-score)*(len(y_test)-1)/(len(y_test)-x_test.shape[1]-1)
+import statsmodels.api as sm
+model=sm.OLS(y_train,x_train).fit()
+prediction=model.predict(x_test)
+print(prediction)
+print(model.summary())
+
+OUTPUT:
+0.6231668022422228
+[ 23.15273336 -13.73564701  10.81066977  -5.18268917 -15.04506694]
+                                 OLS Regression Results                                
+=======================================================================================
+Dep. Variable:                 Weight   R-squared (uncentered):                   0.006
+Model:                            OLS   Adj. R-squared (uncentered):             -0.070
+Method:                 Least Squares   F-statistic:                            0.08206
+Date:                Sun, 07 Apr 2024   Prob (F-statistic):                       0.779
+Time:                        14:06:52   Log-Likelihood:                         -93.044
+No. Observations:                  14   AIC:                                      188.1
+Df Residuals:                      13   BIC:                                      188.7
+Df Model:                           1                                                  
+Covariance Type:            nonrobust                                                  
+==============================================================================
+                 coef    std err          t      P>|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+x1            14.7973     51.657      0.286      0.779     -96.800     126.395
+==============================================================================
+Omnibus:                        1.603   Durbin-Watson:                   0.005
+Prob(Omnibus):                  0.449   Jarque-Bera (JB):                0.930
+Skew:                           0.618   Prob(JB):                        0.628
+Kurtosis:                       2.743   Cond. No.                         1.00
+==============================================================================
+
+Notes:
+[1] R² is computed without centering (uncentered) since the model does not contain a constant.
+[2] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+/usr/local/lib/python3.10/dist-packages/scipy/stats/_stats_py.py:1806: UserWarning: kurtosistest only valid for n>=20 ... continuing anyway, n=14
+  warnings.warn("kurtosistest only valid for n>=20 ... continuing "
+-------------------------------------------------------------
+EX_5_2
+
+import seaborn as sns
+import numpy as np
+import pandas as pd
+df=sns.load_dataset('iris')
+df.head()
+df['species'].unique()
+df.isnull().sum()
+df=df[df['species']!='setosa']
+df.head()
+df['species']=df['species'].map({'versicolor':0,'virginica':1})
+df.head()
+sns.pairplot(df,hue='species')
+df.corr()
+x=df.iloc[:,:-1]
+y=df.iloc[:,-1]
+x
+y
+OUTPUT:
+50     0
+51     0
+52     0
+53     0
+54     0
+      ..
+145    1
+146    1
+147    1
+148    1
+149    1
+Name: species, Length: 100, dtype: int64
+(pic1)
+------
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.25,random_state=42)
+from sklearn.linear_model import LogisticRegression
+clas=LogisticRegression()
+from sklearn.model_selection import GridSearchCV
+para={'penalty':['l2'],'C':[1,2,3,4,5,6,10,20,30,40,50],'max_iter':[100,200,300]}
+class_reg=GridSearchCV(clas,param_grid=para,scoring='accuracy',cv=5)
+class_reg.fit(x_train, y_train)
+print(class_reg.best_params_)
+print(class_reg.best_score_)
+y_pred=class_reg.predict(x_test)
+from sklearn.metrics import accuracy_score,classification_report
+score=accuracy_score(y_pred,y_test)
+print(score)
+print(classification_report(y_pred,y_test))
+
+OUTPUT:
+
+{'C': 1, 'max_iter': 100, 'penalty': 'l2'}
+0.9733333333333334
+0.92
+              precision    recall  f1-score   support
+
+           0       0.93      0.93      0.93        14
+           1       0.91      0.91      0.91        11
+
+    accuracy                           0.92        25
+   macro avg       0.92      0.92      0.92        25
+weighted avg       0.92      0.92      0.92        25
+---------------------------------------------------------------------------------------------------------------
+EX_5_3
+
+import matplotlib.pyplot as plt
+from sklearn.datasets import load_breast_cancer
+dataset=load_breast_cancer(as_frame=True)
+dataset['data'].head()
+dataset['target'].head()
+dataset['target'].value_counts()
+x=dataset['data']
+y=dataset['target']
+
+---------
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.25,random_state=0)
+from sklearn.preprocessing import StandardScaler
+ss_train=StandardScaler()
+x_train=ss_train.fit_transform(x_train)
+models={}
+ss_test=StandardScaler()
+x_test=ss_test.fit_transform(x_test)
+-------
+for key in models.keys():
+  models[key].fit(x_train,y_train)
+  #make predictions
+  predictions = models[key].predict(x_test)
+  #calculate metrics
+  accuracy[key]=accuracy_score(predictions,y_test)
+  precision[key]=precision_score(predictions,y_test)
+  recall[key]=recall_score(predictions,y_test)
+---------
+from sklearn.metrics import confusion_matrix
+cm=confusion_matrix(y_test,predictions)
+tn,fp,fn,tp=confusion_matrix(y_test,predictions).ravel()
+print('True Positive(tp)=',tp)
+print('False Positive(fp)=',fp)
+print('True Negative(tn)=',tn)
+print('False Negative(fn)=',fn)
+accuracy=(tp+tn)/(tp+tn+tn+fn)
+print('Acuuracy of binary classifier={:0.3f}'.format(accuracy))
+---------
+models={}
+#logistic regression
+from sklearn.linear_model import LogisticRegression
+models['Logistic Regression']=LogisticRegression()
+#support vector machine
+from sklearn.svm import LinearSVC
+models['support vector machine']=LinearSVC()
+#decision tree
+from sklearn.tree import DecisionTreeClassifier
+models['decision tree']=DecisionTreeClassifier()
+#random forest
+from sklearn.ensemble import RandomForestClassifier
+models['Random Forest']=RandomForestClassifier()
+#naive bayes
+from sklearn.naive_bayes import GaussianNB
+models['naive bayes']=GaussianNB()
+#k-nearest neighbors
+from sklearn.neighbors import KNeighborsClassifier
+models['k-nearest neighbors']= KNeighborsClassifier()
+from sklearn.metrics import accuracy_score,precision_score,recall_score
+accuracy,precision,recall={},{},{}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------------------------
+EX_6
+pip install mlxtend
+---
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from mlxtend.evaluate import bias_variance_decomp
+url='https://raw.githubusercontent.com/jbrownlee/Datasets/master/housing.csv'
+dataframe = pd.read_csv(url, header=None)
+dataframe.head()
+data=dataframe.values
+x=data[:,:-1]
+y=data[:,-1]
+from mlxtend.evaluate import bias_variance_decomp
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.33,random_state=1)
+#define the model
+model=LinearRegression()
+#estimate bias and variance
+mse,bias,var=bias_variance_decomp(model,x_train,y_train,x_test,y_test,loss='mse',num_rounds=200,random_seed=1)
+#summarize result
+print('MSE : %.3f'%mse)
+print('BIAS : %.3f'%bias)
+print('VARIANCE : %.3f'%var)
+smaple_list=[11,13,15,16,13,16,11,15,17]
+print("The list is : "+str(smaple_list))
+
+OUTPUT:
+MSE : 22.418
+BIAS : 20.744
+VARIANCE : 1.674
+The list is : [11, 13, 15, 16, 13, 16, 11, 15, 17]
+---------
+result=[]
+for i in smaple_list:
+  if i not in result:
+    result.append(i)
+print("The list after removing duplicates : "+str(result))
+from sklearn.datasets import load_iris
+from sklearn.model_selection import cross_val_score,KFold
+from sklearn.linear_model import LogisticRegression
+iris=load_iris()
+x=iris.data
+y=iris.target
+logreg=LogisticRegression()
+kf=KFold(n_splits=5)
+score=cross_val_score(logreg,x,y,cv=kf)
+print("Cross validation scores are : {} ".format(score))
+print("Average cross validation score : {} ",format(score.mean()))
+
+OUTPUT:
+The list after removing duplicates : [11, 13, 15, 16, 17]
+Cross validation scores are : [1.         1.         0.86666667 0.93333333 0.83333333] 
+Average cross validation score : {}  0.9266666666666665
+/usr/local/lib/python3.10/dist-packages/sklearn/linear_model/_logistic.py:458: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  n_iter_i = _check_optimize_result(
+/usr/local/lib/python3.10/dist-packages/sklearn/linear_model/_logistic.py:458: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  n_iter_i = _check_optimize_result(
+/usr/local/lib/python3.10/dist-packages/sklearn/linear_model/_logistic.py:458: ConvergenceWarning: lbfgs failed to converge (status=1):
+STOP: TOTAL NO. of ITERATIONS REACHED LIMIT.
+
+Increase the number of iterations (max_iter) or scale the data as shown in:
+    https://scikit-learn.org/stable/modules/preprocessing.html
+Please also refer to the documentation for alternative solver options:
+    https://scikit-learn.org/stable/modules/linear_model.html#logistic-regression
+  n_iter_i = _check_optimize_result(
